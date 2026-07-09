@@ -8,15 +8,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Le tableau de bord pour les Patients et Médecins
+// Le tableau de bord pour les Patients, Médecins et Admins
+// La vue dashboard.blade.php gère elle-même l'affichage selon le rôle (admin / medecin / patient)
 Route::get('/dashboard', function () {
-    $user = auth()->user();
-
-    if ($user->isAdmin()) {
-        return redirect()->route('admin.dashboard');
-    }
-
-    return view('dashboard'); // patient et médecin pour l'instant
+    return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 // Liste publique des médecins
@@ -33,7 +28,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    // Espace Admin — Redirection vers sa propre vue dédiée
+    // Espace Admin — CRUD et outils dédiés (accessible via /admin/medecins depuis le dashboard)
     Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/dashboard', function () {
             return view('admin.dashboard'); // Point vers resources/views/admin/dashboard.blade.php
