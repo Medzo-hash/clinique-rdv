@@ -20,8 +20,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    // Admin — Gestion des médecins
+// Admin — Tableau de bord et Gestion des médecins
 Route::prefix('admin')->name('admin.')->group(function () {
+    // Nouvelle route pour le tableau de bord admin (on réutilise temporairement la vue medecins de l'admin ou une vue spécifique)
+    Route::get('/dashboard', function () {
+        return redirect()->route('admin.medecins.index'); 
+    })->name('dashboard');
+
     Route::resource('medecins', \App\Http\Controllers\Admin\MedecinController::class);
 });
 
