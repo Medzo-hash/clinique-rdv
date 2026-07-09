@@ -5,16 +5,37 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
+                    <!-- Redirection dynamique basée sur le rôle -->
+                    @if(Auth::user()->role === 'administrateur' || Auth::user()->role === 'admin')
+                        <a href="{{ route('admin.dashboard') }}">
+                    @else
+                        <a href="{{ route('dashboard') }}">
+                    @endif
                         <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
                     </a>
                 </div>
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
-                    </x-nav-link>
+                    <!-- Lien d'accueil dynamique -->
+                    @if(Auth::user()->role === 'administrateur' || Auth::user()->role === 'admin')
+                        <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
+                            {{ __('Accueil') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('admin.medecins.index')" :active="request()->routeIs('admin.medecins.*')">
+                            {{ __('Médecins') }}
+                        </x-nav-link>
+                    @else
+                        <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                            {{ __('Accueil') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('rendezvous.index')" :active="request()->routeIs('rendezvous.*')">
+                            {{ __('Rendez-vous') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('medecins')" :active="request()->routeIs('medecins')">
+                            {{ __('Médecins') }}
+                        </x-nav-link>
+                    @endif
                 </div>
             </div>
 
@@ -23,7 +44,13 @@
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
-                            <div>{{ Auth::user()->name }}</div>
+                            <!-- Affichage du nom et badge de rôle -->
+                            <div class="flex items-center space-x-2">
+                                <span class="capitalize px-2 py-0.5 text-xs font-semibold rounded bg-blue-100 text-blue-800">
+                                    {{ Auth::user()->role ?? 'Patient' }}
+                                </span>
+                                <div>{{ Auth::user()->name }}</div>
+                            </div>
 
                             <div class="ms-1">
                                 <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -35,7 +62,7 @@
 
                     <x-slot name="content">
                         <x-dropdown-link :href="route('profile.edit')">
-                            {{ __('Profile') }}
+                            {{ __('Profil') }}
                         </x-dropdown-link>
 
                         <!-- Authentication -->
@@ -45,7 +72,7 @@
                             <x-dropdown-link :href="route('logout')"
                                     onclick="event.preventDefault();
                                                 this.closest('form').submit();">
-                                {{ __('Log Out') }}
+                                {{ __('Déconnexion') }}
                             </x-dropdown-link>
                         </form>
                     </x-slot>
@@ -67,9 +94,24 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                {{ __('Dashboard') }}
-            </x-responsive-nav-link>
+            @if(Auth::user()->role === 'administrateur' || Auth::user()->role === 'admin')
+                <x-responsive-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
+                    {{ __('Accueil Admin') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('admin.medecins.index')" :active="request()->routeIs('admin.medecins.*')">
+                    {{ __('Gestion Médecins') }}
+                </x-responsive-nav-link>
+            @else
+                <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                    {{ __('Accueil') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('rendezvous.index')" :active="request()->routeIs('rendezvous.*')">
+                    {{ __('Rendez-vous') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('medecins')" :active="request()->routeIs('medecins')">
+                    {{ __('Médecins') }}
+                </x-responsive-nav-link>
+            @endif
         </div>
 
         <!-- Responsive Settings Options -->
@@ -81,7 +123,7 @@
 
             <div class="mt-3 space-y-1">
                 <x-responsive-nav-link :href="route('profile.edit')">
-                    {{ __('Profile') }}
+                    {{ __('Profil') }}
                 </x-responsive-nav-link>
 
                 <!-- Authentication -->
@@ -91,7 +133,7 @@
                     <x-responsive-nav-link :href="route('logout')"
                             onclick="event.preventDefault();
                                         this.closest('form').submit();">
-                        {{ __('Log Out') }}
+                        {{ __('Déconnexion') }}
                     </x-responsive-nav-link>
                 </form>
             </div>

@@ -8,7 +8,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Le tableau de bord unifié (Patient, Médecin, Admin)
+// Le tableau de bord pour les Patients et Médecins
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -27,10 +27,10 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    // Espace Admin — Redirection vers le dashboard Blade commun
+    // Espace Admin — Redirection vers sa propre vue dédiée
     Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/dashboard', function () {
-            return view('dashboard');
+            return view('admin.dashboard'); // Point vers resources/views/admin/dashboard.blade.php
         })->name('dashboard');
 
         // CRUD pour la gestion des médecins par l'admin
