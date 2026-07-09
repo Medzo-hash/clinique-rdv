@@ -64,7 +64,7 @@ DB_PASSWORD=
 # 6. Créer la base de données et lancer les migrations
 php artisan migrate
 
-# 7. Créer le compte administrateur
+# 7. Créer le compte admin
 php artisan db:seed --class=AdminSeeder
 
 # 8. Lancer le serveur

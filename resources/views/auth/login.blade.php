@@ -287,7 +287,7 @@
             <div class="quick-login">
                 <div class="quick-login-title">🚀 Connexion rapide (démo)</div>
                 <button class="quick-btn" onclick="fillLogin('admin@clinique.sn', 'Admin@2026')">
-                    👑 Administrateur — admin@clinique.sn
+                    👑 admin — admin@clinique.sn
                 </button>
                 <button class="quick-btn" onclick="fillLogin('test.medecin@gmail.com', 'password')">
                     👨‍⚕️ Médecin — test.medecin@gmail.com
