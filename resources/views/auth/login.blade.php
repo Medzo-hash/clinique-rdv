@@ -1,7 +1,7 @@
 <x-guest-layout>
     <div class="min-h-screen flex flex-col md:flex-row bg-gray-50">
         
-        {{-- Section Gauche : Information (Bannière Bleue) --}}
+        {{-- Section Gauche : Statistique --}}
         <div class="w-full md:w-5/12 bg-gradient-to-br from-blue-700 to-indigo-900 p-10 flex flex-col justify-between text-white relative overflow-hidden">
             <div class="relative z-10">
                 <div class="flex items-center space-x-3 mb-8">
@@ -14,7 +14,6 @@
                 </p>
             </div>
 
-            {{-- Statistiques --}}
             <div class="grid grid-cols-2 gap-4 my-8 relative z-10">
                 <div class="bg-white/10 backdrop-blur-md rounded-xl p-4 border border-white/10">
                     <div class="text-2xl font-black">1+</div>
@@ -35,11 +34,11 @@
             </div>
 
             <div class="text-xs text-blue-300 relative z-10">
-                &copy; {{ date('Y') }} CliniqPlus &mdash; Dakar, Sénégal
+                &copy; 2026 CliniqPlus &mdash; Dakar, Sénégal
             </div>
         </div>
 
-        {{-- Section Droite : Formulaire de Connexion --}}
+        {{-- Section Droite : Formulaire --}}
         <div class="w-full md:w-7/12 flex items-center justify-center p-8 md:p-16 bg-white">
             <div class="w-full max-w-md space-y-6">
                 <div>
@@ -72,7 +71,7 @@
                         <x-input-error :messages="$errors->get('password')" class="mt-2" />
                     </div>
 
-                    <!-- Remember Me & Forgot Password -->
+                    <!-- Remember Me -->
                     <div class="flex items-center justify-between text-sm">
                         <label for="remember_me" class="inline-flex items-center">
                             <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-blue-600 shadow-sm focus:ring-blue-500" name="remember">
@@ -86,7 +85,6 @@
                         @endif
                     </div>
 
-                    {{-- Bouton Connexion --}}
                     <div>
                         <button type="submit" class="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-xl shadow-sm text-sm font-bold text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-150">
                             👤 Se connecter
@@ -94,7 +92,6 @@
                     </div>
                 </form>
 
-                {{-- Inscription --}}
                 <div class="text-center pt-4 border-t border-gray-100">
                     <p class="text-sm text-gray-600">
                         Pas encore de compte ? 
