@@ -30,17 +30,17 @@ class AuthenticatedSessionController extends Controller
 
         $user = Auth::user();
 
-        // 1. Aiguillage pour l'Administrateur (On évite redirect()->intended pour forcer la bonne route)
+        // 1. Redirection forcée de l'Admin vers son espace dashboard
         if ($user->role === 'administrateur' || $user->role === 'admin') {
             return redirect()->route('admin.dashboard');
         }
 
-        // 2. Aiguillage pour le Médecin (Si tu as une route dédiée, sinon redirection par défaut)
+        // 2. Redirection pour le Médecin (Optionnelle, va sur le dashboard général pour le moment)
         if ($user->role === 'medecin') {
-            return redirect()->intended(route('dashboard', absolute: false));
+            return redirect()->to('/dashboard');
         }
 
-        // 3. Comportement par défaut (Patients)
+        // 3. Redirection par défaut (Patients)
         return redirect()->intended(route('dashboard', absolute: false));
     }
 
