@@ -247,7 +247,8 @@
                 </div>
             @endif
 
-            <form method="POST" action="{{ route('login') }}">
+            {{-- AJOUT DE L'ID SUR LE FORMULAIRE ICI --}}
+            <form method="POST" action="{{ route('login') }}" id="login-form">
                 @csrf
 
                 <div class="form-group">
@@ -283,13 +284,13 @@
                 </button>
             </form>
 
-            {{-- QUICK LOGIN --}}
+            {{-- QUICK LOGIN CORRIGÉ AVEC 'password' --}}
             <div class="quick-login">
                 <div class="quick-login-title">🚀 Connexion rapide (démo)</div>
-                <button class="quick-btn" onclick="fillLogin('admin@clinique.sn', 'Admin@2026')">
+                <button type="button" class="quick-btn" onclick="fillLogin('admin@clinique.sn', 'password')">
                     👑 admin — admin@clinique.sn
                 </button>
-                <button class="quick-btn" onclick="fillLogin('test.medecin@gmail.com', 'password')">
+                <button type="button" class="quick-btn" onclick="fillLogin('test.medecin@gmail.com', 'password')">
                     👨‍⚕️ Médecin — test.medecin@gmail.com
                 </button>
             </div>
@@ -301,10 +302,16 @@
     </div>
 </div>
 
+{{-- SCRIPT CORRIGÉ POUR SOUMETTRE LE FORMULAIRE --}}
 <script>
     function fillLogin(email, password) {
         document.querySelector('input[name="email"]').value = email;
         document.querySelector('input[name="password"]').value = password;
+        
+        // Soumission automatique après un micro-délai de 150ms
+        setTimeout(function() {
+            document.getElementById('login-form').submit();
+        }, 150);
     }
 </script>
 
