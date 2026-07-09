@@ -10,7 +10,13 @@ Route::get('/', function () {
 
 // Le tableau de bord pour les Patients et Médecins
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    $user = auth()->user();
+
+    if ($user->isAdmin()) {
+        return redirect()->route('admin.dashboard');
+    }
+
+    return view('dashboard'); // patient et médecin pour l'instant
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 // Liste publique des médecins
